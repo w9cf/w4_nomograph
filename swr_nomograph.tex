@@ -1,0 +1,123 @@
+\documentclass[12pt]{article}
+\usepackage[margin=25.4mm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning, arrows}
+\begin{document}
+\let\xxxhat\hat
+\let\xxxvec\vec
+\renewcommand{\hat}[1]{{\boldsymbol {\xxxhat {#1}} }}
+\renewcommand{\vec}[1]{\boldsymbol {#1}}
+\newcommand{\dbar}{{ d\hskip -.25em \raisebox{.3em}{-}  }}
+
+\title{SWR nomograph}
+\author{Kevin E. Schmidt, W9CF\\
+6510 South Roosevelt Street\\
+Tempe, AZ 85283\\
+}
+\maketitle
+
+The voltage standing wave ratio is given by the ratio of the
+maximum to minimum peak voltage along a transmission line. For an ideal
+line, the maximum occurs when the forward and reverse waves are in
+phase and the minimum when they are out of phase. So if their magnitudes
+are $V_f$ and $V_r$, and assuming $V_r$ represents a reflected wave
+so it is smaller than $V_f$,
+\begin{equation}
+{\rm SWR} = s = \frac{V_f+V_r}{V_f-V_r} \,.
+\end{equation}
+
+The Drake W-4 measures
+the forward power $P_f = \frac{V_f^2}{2Z_0}$
+and the reverse power $P_r = \frac{V_r^2}{2Z_0}$, where
+the characteristic impedance, $Z_0$, is 50 ohms.
+Substituting we see
+\begin{equation}
+\label{eq.swr}
+{\rm SWR} =
+\frac{1+\sqrt{\frac{P_r}{P_f}}}
+{1-\sqrt{\frac{P_r}{P_f}}} \,.
+\end{equation}
+This is the equation that the Drake nomograph solves.
+
+Since the quantity we want is a function of the ratio of the powers,
+and the nomograph will give a linear combination of the left and right
+axes, we need these axes to be logarithmic so that taking a linear
+combination of the logarithms corresponds to taking the ratio we desire.
+
+Following Drake, we place the axes vertically, and
+take the left axis to be forward power, the
+right axis to be reflected power, and place the swr axis in between them.
+In that case, since we need to divide the powers, the axis need to run
+in the opposite directions so that the interpolation subtracts the logs,
+so we take the forward power increasing from the bottom to the top,
+and the reverse increasing from the top to the bottom.
+
+I take the power axes to be equal height $H$, on the paper, with
+$P_f^{~\rm max} \leq P_f \leq P_f^{~\rm min}$
+and $P_r^{~\rm max} \leq P_r \leq P_r^{~\rm min}$.
+
+Placing $P_f^{\rm min}$ at the bottom of the forward axis, and
+$P_r^{\rm min}$ at the top of the reverse axis, the distance from the
+bottom of the axes is given by
+\begin{eqnarray}
+d_f &=& H \frac{\ln\left (\frac{P_f}{P_f^{~\rm min}}\right)}
+{\ln\left (\frac{~P_f^{\rm max}}{P_f^{~\rm min}}\right)}
+\nonumber\\
+d_r &=& -H \frac{\ln\left (\frac{P_r}{P_r^{~\rm max}}\right)}
+{\ln\left (\frac{~P_r^{\rm max}}{P_r^{~\rm min}}\right)} \,.
+\end{eqnarray}
+Taking the horizontal distance between these axes to be the width $W$
+on the paper, we place the forward axis at $0$, the reverse axis at
+$W$, and the swr axis at $\alpha W$ where $0 < \alpha < 1$ and we
+must
+choose $\alpha$ to get the distance along this axis to be a monotonic
+function of $\frac{P_r}{P_f}$. The distance along the SWR axis is then
+\begin{equation}
+d_s = (1-\alpha) d_f + \alpha d_r\,,
+\end{equation}
+and to get the logs to have the same factor, we require
+\begin{equation}
+\frac{1-\alpha}
+{\ln\left (\frac{~P_f^{\rm max}}{P_f^{~\rm min}}\right)}
+=
+\frac{\alpha}
+{\ln\left (\frac{~P_r^{\rm max}}{P_r^{~\rm min}}\right)} \,,
+\end{equation}
+with solution
+\begin{equation}
+\alpha =
+\frac{\ln\left (\frac{~P_r^{\rm max}}{P_r^{~\rm min}}\right)}
+{\ln\left (\frac{~P_r^{\rm max}}{P_r^{~\rm min}}\right)
++
+\ln\left (\frac{~P_f^{\rm max}}{P_f^{~\rm min}}\right)} \,.
+\end{equation}
+
+Substituting back, we find
+\begin{equation}
+d_s = H\frac{
+\ln \left( \frac{P_f}{P_r} \right)
++ \ln\left ( \frac{P_r^{~\rm max}}{P_f^{~\rm min}} \right)
+}
+{\ln\left (\frac{~P_r^{\rm max}}{P_r^{~\rm min}}\right)
++
+\ln\left (\frac{~P_f^{\rm max}}{P_f^{~\rm min}}\right)} \,.
+\end{equation}
+Solving Eq. \ref{eq.swr} for $s$ the SWR and substituting
+\begin{equation}
+d_s = H\frac{
+\ln \left [\left( \frac{s+1}{s-1} \right)^2 \right ]
++ \ln\left ( \frac{P_r^{~\rm max}}{P_f^{~\rm min}} \right)
+}
+{\ln\left (\frac{~P_r^{\rm max}}{P_r^{~\rm min}}\right)
++
+\ln\left (\frac{~P_f^{\rm max}}{P_f^{~\rm min}}\right)} \,,
+\end{equation}
+gives the position where a particular label will be placed on the
+SWR axis.
+Notice that since all factors contain a log, the base of the log
+cancels, and any base can be used.
+
+\end{document}
